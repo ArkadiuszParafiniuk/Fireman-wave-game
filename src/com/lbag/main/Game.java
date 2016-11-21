@@ -37,8 +37,12 @@ public class Game extends Canvas implements Runnable {
 		menu = new Menu(this, handler, hud);
 		this.addKeyListener(new KeyInput(handler));
 		this.addMouseListener(menu);
+		
+		AudioPlayer.load();
+		
+		AudioPlayer.getMusic("music").loop();
 
-		new Window(WIDTH, HEIGHT, "Fireman waves game!", this);
+		new Window(WIDTH, HEIGHT, "Fireman wave game!", this);
 
 		spawner = new Spawn(handler, hud);
 		r = new Random();
