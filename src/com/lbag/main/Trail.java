@@ -5,8 +5,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 public class Trail extends GameObject{
+	
+	//private BufferedImage player_image;
 	
 	private float alpha = 1;
 	private float life;
@@ -41,6 +44,7 @@ public class Trail extends GameObject{
 		
 		g.setColor(color);
 		g.fillRect((int)x, (int)y, width, height);
+		//g.drawImage(player_image, (int)x,  (int)y, null);
 		
 		g2d.setComposite(makeTransparent(1));
 	}

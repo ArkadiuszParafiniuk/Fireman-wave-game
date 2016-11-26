@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class Game extends Canvas implements Runnable {
@@ -32,8 +33,14 @@ public class Game extends Canvas implements Runnable {
 	};
 
 	public static STATE gameState = STATE.Menu;
+	
+	public static BufferedImage sprite_sheet;
 
 	public Game() {
+		
+		BufferedImageLoader loader = new BufferedImageLoader();
+		
+		sprite_sheet = loader.loadImage("/sprite_sheet.png");
 
 		handler = new Handler();
 		hud = new HUD();
@@ -46,7 +53,7 @@ public class Game extends Canvas implements Runnable {
 		AudioPlayer.getMusic("music").loop();
 
 		new Window(WIDTH, HEIGHT, "Fireman wave game!", this);
-
+		
 		spawner = new Spawn(handler, hud, this);
 		r = new Random();
 
