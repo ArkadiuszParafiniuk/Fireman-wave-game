@@ -11,8 +11,8 @@ public class Player extends GameObject {
 	Random r = new Random();
 	Handler handler;
 	
-	private BufferedImage player_image;
-
+	private BufferedImage player_image;	
+	
 	public Player(float x, float y, ID id, Handler handler) {
 		super(x, y, id);
 		this.handler = handler;
@@ -34,7 +34,7 @@ public class Player extends GameObject {
 		x = Game.clamp(x, 0, Game.WIDTH - 38);
 		y = Game.clamp(y, 0, Game.HEIGHT - 60);
 		
-		handler.addObject(new Trail((int)x, (int)y, ID.Trail, Color.blue, 32, 32, 0.07f, handler));
+		handler.addObject(new ImgTrail((int)x, (int)y, ID.Trail, 32, 32, 0.15f, handler, player_image));
 
 		collision();
 	}
@@ -47,7 +47,22 @@ public class Player extends GameObject {
 			if (tempObject.getId() == ID.BasicEnemy || tempObject.getId() == ID.FastEnemy || tempObject.getId() == ID.SmartEnemy || tempObject.getId() == ID.EnemyBoss) {
 				if (getBounds().intersects(tempObject.getBounds())) {
 					// collision code
-					HUD.HEALTH -= 2;
+					if(HUD.getScore() >= 100) {
+						HUD.HEALTH -= 2;
+					}
+				}
+			}
+			
+			if (tempObject.getId() == ID.Potion) {
+				if (getBounds().intersects(tempObject.getBounds())) {
+					// collision code
+					if(HUD.HEALTH <= 70){
+						HUD.HEALTH += 30;
+					} else {
+						float p = 100 - HUD.HEALTH;
+						HUD.HEALTH += p;
+					}
+					handler.removeObject(tempObject);
 				}
 			}
 

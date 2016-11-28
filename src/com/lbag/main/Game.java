@@ -19,6 +19,8 @@ public class Game extends Canvas implements Runnable {
 	public static boolean paused = false;
 	public int diff = 0;
 	
+	private BufferedImage background_image;	
+	
 	//0 = normal
 	//1 = hard
 
@@ -35,12 +37,14 @@ public class Game extends Canvas implements Runnable {
 	public static STATE gameState = STATE.Menu;
 	
 	public static BufferedImage sprite_sheet;
+	public static BufferedImage background;
 
 	public Game() {
 		
 		BufferedImageLoader loader = new BufferedImageLoader();
 		
 		sprite_sheet = loader.loadImage("/sprite_sheet.png");
+		background = loader.loadImage("/background.png");
 
 		handler = new Handler();
 		hud = new HUD();
@@ -57,15 +61,14 @@ public class Game extends Canvas implements Runnable {
 		spawner = new Spawn(handler, hud, this);
 		r = new Random();
 
-		if (gameState == STATE.Game) {
-			handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler));
-
-			handler.addObject(
-					new BasicEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.BasicEnemy, handler));
-		} else {
+		if (gameState != STATE.Game) {
 			for (int i = 0; i < 10; i++) {
 				handler.addObject(new MenuParticle(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.MenuParticle, handler));
 			}
+			
+			SpriteSheet bg = new SpriteSheet(Game.background);
+			
+			background_image = bg.grabImage(1,1,WIDTH,HEIGHT);
 		}
 
 	}
@@ -148,8 +151,9 @@ public class Game extends Canvas implements Runnable {
 
 		Graphics g = bs.getDrawGraphics();
 
-		g.setColor(Color.black);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
+		//g.setColor(Color.black);
+		//g.fillRect(0, 0, WIDTH, HEIGHT);
+		g.drawImage(background_image, 0,  0, null);
 
 		handler.render(g);
 		if(paused){

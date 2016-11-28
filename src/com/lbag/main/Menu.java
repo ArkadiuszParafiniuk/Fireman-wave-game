@@ -52,7 +52,7 @@ public class Menu extends MouseAdapter {
 			//normal button	
 			if (mouseOver(mx, my, 210, 150, 200, 64)) {
 				game.gameState = STATE.Game;
-				handler.addObject(new Player(Game.WIDTH / 2 - 32, Game.HEIGHT / 2 - 32, ID.Player, handler));
+				handler.addObject(new Player(Game.WIDTH/2, Game.HEIGHT/2, ID.Player, handler));
 				handler.clearEnemys();
 				handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.BasicEnemy, handler));
 				game.diff = 0;
@@ -126,7 +126,7 @@ public class Menu extends MouseAdapter {
 
 			g.setFont(fnt);
 			g.setColor(Color.white);
-			g.drawString("Wave", 235, 100);
+			g.drawString("Firemouse", 185, 100);
 
 			g.setFont(fnt2);
 			g.drawRect(210, 150, 200, 64);
@@ -163,7 +163,7 @@ public class Menu extends MouseAdapter {
 			g.drawString("Game Over", 200, 100);
 
 			g.setFont(fnt3);
-			g.drawString("You lost with a score of: " + hud.getScore(), 50, 200);
+			g.drawString("You lost with a score of: " + hud.getScore() + " on level: " + hud.getLevel(), 50, 200);
 
 			g.setFont(fnt2);
 			g.drawRect(210, 350, 200, 64);

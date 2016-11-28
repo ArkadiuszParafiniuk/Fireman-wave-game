@@ -8,7 +8,7 @@ public class HUD {
 	public static float HEALTH = 100;
 	private float greenValue = 255;
 	
-	private int score = 0;
+	private static int score = 0;
 	private int level = 1;
 
 	public void tick() {
@@ -36,13 +36,14 @@ public class HUD {
 		this.score = score;
 	}
 	
-	public int getScore(){
+	public static int getScore(){
 		return score;
 	}
 	
 	public int getLevel(){
 		return level;
 	}
+	
 	
 	public void setLevel(int level){
 		this.level = level;

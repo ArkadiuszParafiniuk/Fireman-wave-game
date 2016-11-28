@@ -3,11 +3,14 @@ package com.lbag.main;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class MenuParticle extends GameObject{
 	
 	private Handler handler;
+	
+	private BufferedImage fire_image;
 	
 	Random r = new Random();
 	
@@ -23,9 +26,10 @@ public class MenuParticle extends GameObject{
 
 			velX = (r.nextFloat()*4 -4);
 			velY = (r.nextFloat()*4 -4);
-
 		
-		col = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
+		SpriteSheet ss = new SpriteSheet(Game.sprite_sheet);
+
+		fire_image = ss.grabImage(1,2,32,32);
 	}
 	
 	public Rectangle getBounds(){
@@ -36,16 +40,17 @@ public class MenuParticle extends GameObject{
 		x += velX;
 		y += velY;
 		
-		if(y <= 0 || y >= Game.HEIGHT - 32) velY *= -1;
-		if(x <= 0 || x >= Game.WIDTH - 16) velX *= -1;
+		if(y <= -100 || y >= Game.HEIGHT + 100) velY *= -1;
+		if(x <= -100 || x >= Game.WIDTH + 100) velX *= -1;
 		
-		handler.addObject(new Trail((int)x, (int)y, ID.Trail, col, 16, 16, 0.05f, handler));
+		handler.addObject(new ImgTrail((int)x, (int)y, ID.Trail, 16, 16, 0.03f, handler, fire_image));
 
 	}
 
 	public void render(Graphics g) {		
-		g.setColor(col);
-		g.fillRect((int)x, (int)y, 16, 16);
+		//g.setColor(col);
+		//g.fillRect((int)x, (int)y, 16, 16);
+		g.drawImage(fire_image, (int)x,  (int)y, null);
 	}
 	
 }
